@@ -9,7 +9,7 @@ const number = document.getElementById("numbers")
 const symbol = document.getElementById("symbols")
 const indicator = document.querySelector('[data-indicator]')
 const generateBTN = document.getElementById('btn');
-const allCheckBox = document.querySelectorAll("input[type=checkbox");
+const allCheckBox = document.querySelectorAll("input[type=checkbox]");
 
 
 let password = "";
