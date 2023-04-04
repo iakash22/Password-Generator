@@ -8,7 +8,7 @@ const lower = document.getElementById("lowercase")
 const number = document.getElementById("numbers")
 const symbol = document.getElementById("symbols")
 const indicator = document.querySelector('[data-indicator]')
-const generateBTN = document.getElementById('btn');
+const generateBTN = document.getElementById('generate-btn');
 const allCheckBox = document.querySelectorAll("input[type=checkbox]");
 
 
@@ -21,13 +21,16 @@ handleSlider();
 function handleSlider(){
     slider.value = passwordLength;
     lengthDisplay.innerText = passwordLength;
+    const min = slider.min
+    const max = slider.max;
+    slider.style.backgroundSize = ((passwordLength - min)*100 /(max-min)) + "% 100%"
 }
 
 
 // set Indicator color 
 function setIndicator(color){
     // indicator.style.cssText = color;
-    indicator.style.cssText = (`background-color: ${color}; box-shadow: 0px 0px 15px ${color};`)
+    indicator.style.cssText = (`background-color: ${color}; box-shadow: 0px 0px 12px ${color};`)
 }
 
 function getRndInteger(min,max){
@@ -83,18 +86,18 @@ async function copyContent(){
     }
     // console.log("add active class")
     copyMsg.classList.add('active');
-    copyMsg.style.scale = 1;
+    // copyMsg.style.scale = 1;
     setTimeout(() => {
         copyMsg.classList.remove('active');
-        // console.log("remove active class")
-        // copyMsg.innerText = '';
-        copyMsg.style.scale = 0;
+        console.log("remove active class")
+        copyMsg.innerText = '';
+        // copyMsg.style.scale = 0;
     },2000);
 }
 
 function sufflePassword(array){
-    for(let i=array.length-1; i>=0; i--){
-        const j = Math.floor(Math.random * (i));
+    for(let i=array.length-1; i>0; i--){
+        const j = Math.floor(Math.random() * (i+1));
         const temp = array[i];
         array[i] = array[j];
         array[j] = temp;
@@ -135,6 +138,7 @@ allCheckBox.forEach((checkBox)=> {
 
 
 generateBTN.addEventListener('click', ()=> {
+    console.log("btn");
     if(checkCount <= 0) {
         return;
     }
@@ -170,7 +174,7 @@ generateBTN.addEventListener('click', ()=> {
         password += funArray[randomIndx]();
     }
 
-    // password = sufflePassword(Array.from(password));
+    password = sufflePassword(Array.from(password));
 
     pwdDisplay.value = password;
     calculateStrength();
